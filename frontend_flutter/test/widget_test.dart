@@ -3,16 +3,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:frontend_flutter/main.dart';
 
 void main() {
-  testWidgets('App generation message displayed', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+  testWidgets('App loads with bottom navigation destinations', (WidgetTester tester) async {
+    await tester.pumpWidget(const RecipeExplorerApp());
+    await tester.pumpAndSettle();
 
-    expect(find.text('frontend_flutter App is being generated...'), findsOneWidget);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(NavigationBar), findsOneWidget);
+    expect(find.text('Home'), findsOneWidget);
+    expect(find.text('Search'), findsOneWidget);
+    expect(find.text('Favorites'), findsOneWidget);
   });
 
-  testWidgets('App bar has correct title', (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Home screen shows list or loader', (WidgetTester tester) async {
+    await tester.pumpWidget(const RecipeExplorerApp());
 
-    expect(find.text('frontend_flutter'), findsOneWidget);
+    // At least a loader should appear then settle to list.
+    expect(find.byType(CircularProgressIndicator), findsWidgets);
   });
 }
